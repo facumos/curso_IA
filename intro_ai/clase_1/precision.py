@@ -1,4 +1,4 @@
-class Precision(BaseMetric):
+class Precision(object):
 
     def __call__(self, prediction, truth):
         """
