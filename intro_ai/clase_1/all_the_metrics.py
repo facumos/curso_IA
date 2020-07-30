@@ -36,27 +36,32 @@ class BaseMetrics(object):
         self.fetched_documents_count = np.bincount(query_ids)[unique_query_ids]
         self.K = K
 
-    class Prediction(BaseMetrics):
-        def __init__(self):
-            BaseMetrics.__init__(self, prediction, truth, predicted_rank, truth_relevance, query_ids, K)
 
-        def __call__(self, true_pos, false_pos):
-            return true_pos / (true_pos + false_pos)
+class Prediction(BaseMetrics):
+    def __init__(self):
+        BaseMetrics.__init__(self, prediction, truth, predicted_rank, truth_relevance, query_ids, K)
 
-    class Recall(BaseMetrics):
-        def __call__(self, true_pos, false_neg):
-            return true_pos / (true_pos + false_neg)
+    def __call__(self, true_pos, false_pos):
+        return true_pos / (true_pos + false_pos)
 
-    class Accuracy(BaseMetrics):
-        def __call__(self, true_pos, true_neg, false_pos, false_neg):
-            return (true_pos + true_neg) / (true_pos + true_neg + false_pos + false_neg)
 
-    class QueryMeanPrecision(BaseMetrics):
-        def __call__(self, true_relevance_count_by_query, fetched_documents_count):
-            precision_by_query = true_relevance_count_by_query / fetched_documents_count
-            return np.mean(precision_by_query)
+class Recall(BaseMetrics):
+    def __call__(self, true_pos, false_neg):
+        return true_pos / (true_pos + false_neg)
 
-    class QueryMeanPrecisionK(BaseMetrics):
-        def __call__(self, true_relevance_count_by_query, K):
-            precision_by_query = true_relevance_count_by_query / K
-            return np.mean(precision_by_query)
+
+class Accuracy(BaseMetrics):
+    def __call__(self, true_pos, true_neg, false_pos, false_neg):
+        return (true_pos + true_neg) / (true_pos + true_neg + false_pos + false_neg)
+
+
+class QueryMeanPrecision(BaseMetrics):
+    def __call__(self, true_relevance_count_by_query, fetched_documents_count):
+        precision_by_query = true_relevance_count_by_query / fetched_documents_count
+        return np.mean(precision_by_query)
+
+
+class QueryMeanPrecisionK(BaseMetrics):
+    def __call__(self, true_relevance_count_by_query, K):
+        precision_by_query = true_relevance_count_by_query / K
+        return np.mean(precision_by_query)
