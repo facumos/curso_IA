@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 from data import Data
-from base_model import BaseModel, LinearRegression, MiniBatchGradientDescent
+from base_model import BaseModel, LinearRegression, MiniBatchGradientDescent, Ridge
 from k_folds import k_folds_poly
 from metric import Metric, MSE
 
@@ -20,7 +20,7 @@ def mini_batch_gradient_descent(X_train, y_train, lr=0.01, amt_epochs=100):
     m = X_train.shape[1]
 
     # initialize random weights
-    # W = np.random.randn(m).reshape(m, 1)/10**10
+    # W = np.random.randn(m).reshape(m, 1)
     W = np.array([[-3.10831876e-11], [-1.00425579e-06], [6.05261793e-04], [1.01313276e-03], [1.78439150e+01]])
     chunk_size = 5
     part = int(X_train.shape[0]/chunk_size)
@@ -123,12 +123,32 @@ if __name__ == '__main__':
 # 4. Regresión polinómica para hacer fit
 
     # Vuelvo a utilizar X4 como dataset de entrada
-    lr = 0.001
-    amt_epochs = 100
+    lr = 0.00000000000000000001  # Creo que le pegué al parámetro
+    amt_epochs = 10000
 
     gradient = MiniBatchGradientDescent()
-    W_MB = gradient.fit(X_4, y_train.reshape(-1, 1), lr, amt_epochs)
-    # W_MB = mini_batch_gradient_descent(X_4, y_train.reshape(-1, 1), lr, amt_epochs)
+    # gradient.fit(X_train.reshape(-1, 1), y_train.reshape(-1, 1), lr, amt_epochs)
+    gradient.fit(X_4, y_train.reshape(-1, 1), lr, amt_epochs)
+    W_MB = gradient.model
+    # W_MB_2 = mini_batch_gradient_descent(X_4, y_train.reshape(-1, 1), lr, amt_epochs)
+    y_MB = W_MB[0] * np.power(X_test, 4) + W_MB[1] * np.power(X_test, 3)+ \
+        W_MB[2] * np.power(X_test, 2) + W_MB[3] * X_test+ W_MB[4]
+    error = MSE()
+
+    print('MSE_MB-test: {}'.format(error(y_test, y_MB)))
+
+# 5. Agrego Ridge
+    ridge = Ridge()
+    lam = 100
+    X_MB = W_MB[0] * np.power(X_train, 4) + W_MB[1] * np.power(X_train, 3)+ \
+        W_MB[2] * np.power(X_train, 2) + W_MB[3] * X_train+ W_MB[4]
+    ridge.fit(X_MB, y_train, lam)
+    W_R = ridge.model
+    y_R = W_R[0] * np.power(X_test, 4) + W_R[1] * np.power(X_test, 3)+ \
+        W_R[2] * np.power(X_test, 2) + W_R[3] * X_test+ W_R[4]
+    error = MSE()
+
+    print('MSE_R-test: {}'.format(error(y_test, y_R)))
 
 
 
