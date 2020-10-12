@@ -54,6 +54,8 @@ class Ridge(BaseModel):
             W = X.T.dot(y) / (X.T.dot(X)+lam)
         else:
             W = np.linalg.inv(X.T.dot(X)+lam*np.identity(X.shape[1])).dot(X.T).dot(y)
+            aux = np.linalg.inv(X.T.dot(X)+lam*np.identity(X.shape[1]))
+            aux_2 = lam*np.identity(X.shape[1])
         self.model = W
 
     def predict(self, X):

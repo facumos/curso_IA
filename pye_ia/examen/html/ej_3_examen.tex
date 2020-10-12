@@ -1,0 +1,118 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    
+\subsection*{Contents}
+
+\begin{itemize}
+\setlength{\itemsep}{-1ex}
+   \item c) Intervalo de confianza
+   \item c) Test de Hipótesis
+\end{itemize}
+
+
+\subsection*{c) Intervalo de confianza}
+
+\begin{verbatim}
+randn('seed', 1234)
+% numero de simulaciones
+n = 2e4;
+% numero de muestras
+N = 10;
+% media muestral
+% la usamos como media de distribucion en el ejercicio
+mu = 48;
+% dispersion
+sigma = 4;
+% el intervalo de confianza de 95
+% teorico es:
+mu_min_teorico = mu - 1.96*sigma/sqrt(N);
+mu_max_teorico = mu + 1.96*sigma/sqrt(N);
+% nivel de confianza del intervalo, deberia ser igual a 0.95 al final de
+% la simulacion
+confianza = 0;
+for i=1:n
+    % generar distribucion
+    % esta surge de la estimacion de media muestral
+    X = sigma/sqrt(N)*randn(N,1) + mu;
+    %  chequeo cuantos valores estan en el intervalo de confianza
+    confianza = confianza + (1/(n*N)) *sum(X>=mu_min_teorico & X<=mu_max_teorico);
+end
+% estimacion del intervalo de confianza
+confianza_simulado = confianza
+confianza_teorico = 0.95
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+confianza_simulado =
+
+    0.9504
+
+
+confianza_teorico =
+
+    0.9500
+
+\end{verbatim} \color{black}
+    
+
+\subsection*{c) Test de Hipótesis}
+
+\begin{par}
+CIMT - Hypothesis Testing, ejemplo de las bebidas \begin{verbatim}http://www.cimt.org.uk/projects/mepres/alevel/stats_ch10.pdf\end{verbatim} la hipotesis nula es que los participantes eligen al azar
+\end{par} \vspace{1em}
+\begin{verbatim}
+p = 1/3;
+% nivel de significacion
+alpha = 0.05;
+% numero de personas
+N = 10;
+% minimo numero de personas
+N_min = 0;
+% probabilidad de necesitar i personas para el ensayo
+p_i_personas = 0;
+% cuantas personas son necesarias para rechazar la hipotesis nula,
+%busco desde el maximo hacia el minimo de personas
+for i=N:-1:0
+    % buscar el numero de personas hasta con la cdf binomial hasta que se
+    %exceda alpha, y retornar el numero de personas anterior
+    % probabilidad de que 'i' personas deban acertar el ensayo
+    p_i_personas = 0;
+    % si i personas aciertan, i+1 incluyen a las i personas previas
+    % asi que las debo incluir
+    for j=i:N
+        p_i_personas = p_i_personas + binopdf(j,N,p);
+    end;
+        % si esta probabilidad excede a alpha, entonces necesitamos una
+        % persona mas en el ensayo
+        if(p_i_personas>alpha)
+            % devolver el numero de personas previo
+            % (recordar que i es descendiente)
+            N_min = i+1;
+            break;
+        end;
+end;
+            disp('Minimo numero de personas:'), disp(N_min)
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}Minimo numero de personas:
+     7
+
+\end{verbatim} \color{black}
+    
+
+
+\end{document}
+    

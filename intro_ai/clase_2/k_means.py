@@ -9,6 +9,7 @@ X = np.random.uniform(1, 0, size=(3,3))
 
 def k_means(X, n_clusters):
     centroids = np.eye(n_clusters, X.shape[1])
+    # centroids = np.array([[0, 2, 0], [1, 1, 1]])
     print(centroids)
     for i in range(MAX_ITERATIONS):
         print("Iteration # {}".format(i))

@@ -47,6 +47,19 @@ class LinearRegressionWithB(BaseModel):
         return X_expanded.dot(self.model)
 
 
+class Ridge(BaseModel):
+
+    def fit(self, X, y, lam):
+        if len(X.shape) == 1:
+            W = X.T.dot(y) / (X.T.dot(X)+lam)
+        else:
+            W = np.linalg.inv(X.T.dot(X)+lam*np.identity(X.shape[1])).dot(X.T).dot(y)
+        self.model = W
+
+    def predict(self, X):
+        return self.model * X
+
+
 class GradientDescent(BaseModel):
 
     def fit(self, X, y, lr=0.01, amt_epochs=100):
@@ -145,7 +158,7 @@ class MiniBatchGradientDescent(BaseModel):
                 error = batch_y - prediction  # nx1
 
                 grad_sum = np.sum(error * batch_X, axis=0)
-                grad_mul = -2 / n * grad_sum  # 1xm
+                grad_mul = -2 / b * grad_sum  # 1xm
                 gradient = np.transpose(grad_mul).reshape(-1, 1)  # mx1
 
                 W = W - (lr * gradient)

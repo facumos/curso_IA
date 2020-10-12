@@ -123,8 +123,8 @@ if __name__ == '__main__':
 # 4. Regresión polinómica para hacer fit
 
     # Vuelvo a utilizar X4 como dataset de entrada
-    lr = 0.00000000000000000001  # Creo que le pegué al parámetro
-    amt_epochs = 1000000
+    lr = 1*10**(-22)  # Creo que le pegué al parámetro
+    amt_epochs = 1000
 
     gradient = MiniBatchGradientDescent()
     # gradient.fit(X_train.reshape(-1, 1), y_train.reshape(-1, 1), lr, amt_epochs)
@@ -139,13 +139,14 @@ if __name__ == '__main__':
 
 # 5. Agrego Ridge
     ridge = Ridge()
-    lam = 10000
+    lam = 1*10**19
     X_MB = np.vstack((W_MB[0] * np.power(X_train, 4), W_MB[1] * np.power(X_train, 3),
-        W_MB[2] *np.power(X_train, 2), W_MB[3] * X_train, W_MB[4] * np.ones(len(X_train)))).T
+        W_MB[2] * np.power(X_train, 2), W_MB[3] * X_train, W_MB[4] * np.ones(len(X_train)))).T
     ridge.fit(X_MB, y_train.reshape(-1, 1), lam)
     W_R = ridge.model
     y_R = W_R[0] * np.power(X_test, 4) + W_R[1] * np.power(X_test, 3) + \
         W_R[2] * np.power(X_test, 2) + W_R[3] * X_test + W_R[4]
+
     error = MSE()
 
     print('MSE_R-test: {}'.format(error(y_test, y_R)))

@@ -1,0 +1,251 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>ej_1_examen</title><meta name="generator" content="MATLAB 9.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-08-21"><meta name="DC.source" content="ej_1_examen.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">a) Resolucion te&oacute;rica</a></li><li><a href="#2">a) Grafico de comprobacion</a></li><li><a href="#3">b)</a></li><li><a href="#4">c) para encontrar el N</a></li><li><a href="#5">c) para media y varianza</a></li></ul></div><h2>a) Resolucion te&oacute;rica<a name="1"></a></h2><pre class="codeinput">p=0.01;
+syms <span class="string">N</span> <span class="string">n</span>
+assumptions
+solve(0.5-(1-p)^N)
+<span class="comment">% N=-(198*log(10) - 99*log(99) + lambertw(-1, -99*exp(99*log(99) - 198*log(10))*(log(10) - log(99)/2)))/(2*log(10) - log(99));</span>
+<span class="comment">% solve(n*p*(1-p)^(n-1)-0.5)</span>
+<span class="comment">% n=-(99*lambertw(0, (99*log(99))/2 - 99*log(10)))/(2*(99*log(10) - (99*log(99))/2))</span>
+</pre><pre class="codeoutput"> 
+ans =
+ 
+0 &lt; N
+ 
+ 
+ans =
+ 
+-log(2)/log(99/100)
+ 
+</pre><h2>a) Grafico de comprobacion<a name="2"></a></h2><pre class="codeinput">clc, clear, close <span class="string">all</span>
+muestras=300;
+X=1;
+p=0.01;
+<span class="comment">% for X=1:10</span>
+<span class="keyword">for</span> N=1:muestras
+    a(N)=binocdf(0,N,p);
+<span class="keyword">end</span>
+N=1:muestras;
+plot(N,1-a)
+hold <span class="string">on</span>
+grid <span class="string">on</span>
+<span class="comment">% end</span>
+</pre><img vspace="5" hspace="5" src="ej_1_examen_01.png" style="width:560px;height:420px;" alt=""> <h2>b)<a name="3"></a></h2><pre class="codeinput">N=68;
+mu=N*p
+sigma=sqrt(N*p*(1-p))
+</pre><pre class="codeoutput">
+mu =
+
+    0.6800
+
+
+sigma =
+
+    0.8205
+
+</pre><h2>c) para encontrar el N<a name="4"></a></h2><h2>c) para media y varianza<a name="5"></a></h2><p>proceso Bernoulli con v.a. uniforme</p><pre class="codeinput"><span class="comment">% configuro la semilla inicial del proceso aleatorio uniforme</span>
+rand (<span class="string">'seed'</span>, 123);
+
+<span class="comment">% probabilidad de fosforo defectuoso</span>
+p = 0.01;
+
+<span class="comment">% cantidad de fosforos por caja</span>
+n=68;
+
+<span class="comment">% numero de ensayos</span>
+N = 10000;
+
+<span class="comment">% numero de cecas, vale 1 cuando es ceca</span>
+ndefectos_vector = zeros(N,1);
+
+<span class="comment">% se hacen N ensayos y en cada uno se guardan n fosforos en la caja, se</span>
+<span class="comment">% buscan qu&eacute; cantidad de ellos son defectuosos con probabilidad p</span>
+<span class="keyword">for</span> i = 1:N
+
+  <span class="comment">% n fosforos por ensayo</span>
+  <span class="keyword">for</span> j = 1:n
+
+    <span class="keyword">if</span>(rand() &lt; p)
+      ndefectos_vector(i) = ndefectos_vector(i) + 1;
+    <span class="keyword">end</span>
+
+  <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+
+<span class="comment">% calcular la media y varianza</span>
+media_muestral = sum(ndefectos_vector) / N
+
+<span class="comment">% varianza muestral</span>
+var_m = (1/(N-1)) * sum((ndefectos_vector - media_muestral * ones(N,1)).^2)
+
+<span class="comment">% media teorica</span>
+media_teorica = n*p
+
+<span class="comment">% varianza teorica</span>
+varianza_teorica = n * p * (1-p)
+</pre><pre class="codeoutput">
+media_muestral =
+
+    0.6852
+
+
+var_m =
+
+    0.6964
+
+
+media_teorica =
+
+    0.6800
+
+
+varianza_teorica =
+
+    0.6732
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% a) Resolucion teórica
+p=0.01;
+syms N n
+assumptions
+solve(0.5-(1-p)^N)
+% N=-(198*log(10) - 99*log(99) + lambertw(-1, -99*exp(99*log(99) - 198*log(10))*(log(10) - log(99)/2)))/(2*log(10) - log(99));
+% solve(n*p*(1-p)^(n-1)-0.5)
+% n=-(99*lambertw(0, (99*log(99))/2 - 99*log(10)))/(2*(99*log(10) - (99*log(99))/2))
+%% a) Grafico de comprobacion
+clc, clear, close all
+muestras=300;
+X=1;
+p=0.01;
+% for X=1:10
+for N=1:muestras
+    a(N)=binocdf(0,N,p);
+end
+N=1:muestras;
+plot(N,1-a)
+hold on
+grid on
+% end
+%% b)
+N=68;
+mu=N*p
+sigma=sqrt(N*p*(1-p))
+%% c) para encontrar el N
+
+
+%% c) para media y varianza
+% proceso Bernoulli con v.a. uniforme
+
+% configuro la semilla inicial del proceso aleatorio uniforme
+rand ('seed', 123);
+
+% probabilidad de fosforo defectuoso
+p = 0.01;
+
+% cantidad de fosforos por caja
+n=68;
+
+% numero de ensayos
+N = 10000;
+
+% numero de cecas, vale 1 cuando es ceca
+ndefectos_vector = zeros(N,1);
+
+% se hacen N ensayos y en cada uno se guardan n fosforos en la caja, se
+% buscan qué cantidad de ellos son defectuosos con probabilidad p
+for i = 1:N
+
+  % n fosforos por ensayo
+  for j = 1:n
+
+    if(rand() < p)
+      ndefectos_vector(i) = ndefectos_vector(i) + 1;
+    end
+
+  end
+
+end
+
+% calcular la media y varianza
+media_muestral = sum(ndefectos_vector) / N
+
+% varianza muestral
+var_m = (1/(N-1)) * sum((ndefectos_vector - media_muestral * ones(N,1)).^2)
+
+% media teorica
+media_teorica = n*p
+
+% varianza teorica
+varianza_teorica = n * p * (1-p)
+
+
+##### SOURCE END #####
+--></body></html>

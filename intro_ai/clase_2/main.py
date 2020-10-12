@@ -1,8 +1,8 @@
 import numpy as np
 
-from clase_2.synthetic_dataset import SyntheticDataset
-from clase_2.random_variable import exponential_random_variable
-from clase_2.k_means import k_means
+from synthetic_dataset import SyntheticDataset
+from random_variable import exponential_random_variable
+from k_means import k_means
 
 
 # exercice # 1
@@ -62,3 +62,5 @@ SyntheticDataset.plot_cluster(train_expanded_pca, train_cluster_ids)
 # use k-means to cluster the data and the plot the new cluster
 centroids, cluster_ids = k_means(train_expanded, 2)
 SyntheticDataset.plot_cluster(train_expanded_pca, cluster_ids)
+
+a=3

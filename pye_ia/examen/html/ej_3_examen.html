@@ -1,0 +1,207 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>ej_3_examen</title><meta name="generator" content="MATLAB 9.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-08-21"><meta name="DC.source" content="ej_3_examen.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">c) Intervalo de confianza</a></li><li><a href="#2">c) Test de Hip&oacute;tesis</a></li></ul></div><h2>c) Intervalo de confianza<a name="1"></a></h2><pre class="codeinput">randn(<span class="string">'seed'</span>, 1234)
+<span class="comment">% numero de simulaciones</span>
+n = 2e4;
+<span class="comment">% numero de muestras</span>
+N = 10;
+<span class="comment">% media muestral</span>
+<span class="comment">% la usamos como media de distribucion en el ejercicio</span>
+mu = 48;
+<span class="comment">% dispersion</span>
+sigma = 4;
+<span class="comment">% el intervalo de confianza de 95</span>
+<span class="comment">% teorico es:</span>
+mu_min_teorico = mu - 1.96*sigma/sqrt(N);
+mu_max_teorico = mu + 1.96*sigma/sqrt(N);
+<span class="comment">% nivel de confianza del intervalo, deberia ser igual a 0.95 al final de</span>
+<span class="comment">% la simulacion</span>
+confianza = 0;
+<span class="keyword">for</span> i=1:n
+    <span class="comment">% generar distribucion</span>
+    <span class="comment">% esta surge de la estimacion de media muestral</span>
+    X = sigma/sqrt(N)*randn(N,1) + mu;
+    <span class="comment">%  chequeo cuantos valores estan en el intervalo de confianza</span>
+    confianza = confianza + (1/(n*N)) *sum(X&gt;=mu_min_teorico &amp; X&lt;=mu_max_teorico);
+<span class="keyword">end</span>
+<span class="comment">% estimacion del intervalo de confianza</span>
+confianza_simulado = confianza
+confianza_teorico = 0.95
+</pre><pre class="codeoutput">
+confianza_simulado =
+
+    0.9504
+
+
+confianza_teorico =
+
+    0.9500
+
+</pre><h2>c) Test de Hip&oacute;tesis<a name="2"></a></h2><p>CIMT - Hypothesis Testing, ejemplo de las bebidas <a href="http://www.cimt.org.uk/projects/mepres/alevel/stats_ch10.pdf">http://www.cimt.org.uk/projects/mepres/alevel/stats_ch10.pdf</a> la hipotesis nula es que los participantes eligen al azar</p><pre class="codeinput">p = 1/3;
+<span class="comment">% nivel de significacion</span>
+alpha = 0.05;
+<span class="comment">% numero de personas</span>
+N = 10;
+<span class="comment">% minimo numero de personas</span>
+N_min = 0;
+<span class="comment">% probabilidad de necesitar i personas para el ensayo</span>
+p_i_personas = 0;
+<span class="comment">% cuantas personas son necesarias para rechazar la hipotesis nula,</span>
+<span class="comment">%busco desde el maximo hacia el minimo de personas</span>
+<span class="keyword">for</span> i=N:-1:0
+    <span class="comment">% buscar el numero de personas hasta con la cdf binomial hasta que se</span>
+    <span class="comment">%exceda alpha, y retornar el numero de personas anterior</span>
+    <span class="comment">% probabilidad de que 'i' personas deban acertar el ensayo</span>
+    p_i_personas = 0;
+    <span class="comment">% si i personas aciertan, i+1 incluyen a las i personas previas</span>
+    <span class="comment">% asi que las debo incluir</span>
+    <span class="keyword">for</span> j=i:N
+        p_i_personas = p_i_personas + binopdf(j,N,p);
+    <span class="keyword">end</span>;
+        <span class="comment">% si esta probabilidad excede a alpha, entonces necesitamos una</span>
+        <span class="comment">% persona mas en el ensayo</span>
+        <span class="keyword">if</span>(p_i_personas&gt;alpha)
+            <span class="comment">% devolver el numero de personas previo</span>
+            <span class="comment">% (recordar que i es descendiente)</span>
+            N_min = i+1;
+            <span class="keyword">break</span>;
+        <span class="keyword">end</span>;
+<span class="keyword">end</span>;
+            disp(<span class="string">'Minimo numero de personas:'</span>), disp(N_min)
+</pre><pre class="codeoutput">Minimo numero de personas:
+     7
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% c) Intervalo de confianza
+randn('seed', 1234)
+% numero de simulaciones
+n = 2e4;
+% numero de muestras
+N = 10;
+% media muestral
+% la usamos como media de distribucion en el ejercicio
+mu = 48;
+% dispersion
+sigma = 4;
+% el intervalo de confianza de 95
+% teorico es:
+mu_min_teorico = mu - 1.96*sigma/sqrt(N);
+mu_max_teorico = mu + 1.96*sigma/sqrt(N);
+% nivel de confianza del intervalo, deberia ser igual a 0.95 al final de 
+% la simulacion
+confianza = 0;
+for i=1:n    
+    % generar distribucion    
+    % esta surge de la estimacion de media muestral    
+    X = sigma/sqrt(N)*randn(N,1) + mu;    
+    %  chequeo cuantos valores estan en el intervalo de confianza
+    confianza = confianza + (1/(n*N)) *sum(X>=mu_min_teorico & X<=mu_max_teorico);
+end
+% estimacion del intervalo de confianza
+confianza_simulado = confianza 
+confianza_teorico = 0.95
+%% c) Test de Hipótesis
+% CIMT - Hypothesis Testing, ejemplo de las bebidas
+% http://www.cimt.org.uk/projects/mepres/alevel/stats_ch10.pdf
+% la hipotesis nula es que los participantes eligen al azar
+p = 1/3;
+% nivel de significacion
+alpha = 0.05;
+% numero de personas
+N = 10;
+% minimo numero de personas
+N_min = 0;
+% probabilidad de necesitar i personas para el ensayo
+p_i_personas = 0;
+% cuantas personas son necesarias para rechazar la hipotesis nula, 
+%busco desde el maximo hacia el minimo de personas
+for i=N:-1:0    
+    % buscar el numero de personas hasta con la cdf binomial hasta que se 
+    %exceda alpha, y retornar el numero de personas anterior
+    % probabilidad de que 'i' personas deban acertar el ensayo
+    p_i_personas = 0;
+    % si i personas aciertan, i+1 incluyen a las i personas previas 
+    % asi que las debo incluir    
+    for j=i:N      
+        p_i_personas = p_i_personas + binopdf(j,N,p);    
+    end;
+        % si esta probabilidad excede a alpha, entonces necesitamos una
+        % persona mas en el ensayo
+        if(p_i_personas>alpha)
+            % devolver el numero de personas previo 
+            % (recordar que i es descendiente)
+            N_min = i+1;        
+            break;    
+        end;
+end; 
+            disp('Minimo numero de personas:'), disp(N_min)
+
+##### SOURCE END #####
+--></body></html>
